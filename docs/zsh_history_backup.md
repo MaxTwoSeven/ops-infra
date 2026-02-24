@@ -38,3 +38,6 @@ View latest:
 ## Mental Model
 
 LaunchAgent → runs script → snapshots history → rotates backups.
+
+---
+this line is a test
