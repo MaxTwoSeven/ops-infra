@@ -1,0 +1,5 @@
+
+# Ops dashboard
+ops-dashboard/**/node_modules/
+ops-dashboard/web/dist/
+.DS_Store
