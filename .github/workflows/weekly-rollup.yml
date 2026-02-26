@@ -1,0 +1,34 @@
+name: Weekly Rollup
+
+on:
+  schedule:
+    # Mondays 14:00 UTC (roughly 9am ET standard time)
+    - cron: "0 14 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  rollup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate weekly rollup
+        run: |
+          chmod +x scripts/generate_weekly_rollup.sh
+          scripts/generate_weekly_rollup.sh
+
+      - name: Commit and push (if changed)
+        run: |
+          if git status --porcelain | grep -q .; then
+            git config user.name "ops-infra-bot"
+            git config user.email "ops-infra-bot@users.noreply.github.com"
+            git add docs .weekly_log_path
+            git commit -m "chore: weekly rollup"
+            git push
+          else
+            echo "No changes to commit."
+          fi
