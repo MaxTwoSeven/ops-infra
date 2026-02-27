@@ -16,25 +16,24 @@ fi
 STAMP="$(date -u +%G-W%V)"
 OUT="docs/${START}_${STAMP}_weekly-log.md"
 
-# Avoid duplicates if rerun
+# Avoid duplicates if rerun (local testing convenience)
 if [[ -f "$OUT" ]]; then
   echo "Weekly rollup already exists: $OUT"
   echo "$OUT" > .weekly_log_path
   exit 0
 fi
 
+# Telemetry (ops-infra)
 COMMITS="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --oneline | wc -l | tr -d ' ')"
 FILES_CHANGED="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --name-only --pretty="" | sed '/^$/d' | sort -u | wc -l | tr -d ' ')"
 HIGHLIGHTS="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --pretty=format:'- %s' | head -n 20 || true)"
-# Find daily notes via git history (robust: works even if files moved/changed this week)
+
+# Find daily notes via git history (robust)
 NOTE_FILES="$(git log --since="$START 00:00:00" --until="$END 23:59:59" \
   --name-only --pretty="" \
   | sed '/^$/d' \
   | grep '^journal/daily/.*\.md$' \
   | sort -u || true)"
-  match($0, /([0-9]{4}-[0-9]{2}-[0-9]{2})\.md$/, a);
-  if (a[1] >= s && a[1] <= e) print $0
-' || true)"
 
 cat > "$OUT" <<EOF
 # Weekly Rollup — ${STAMP}
@@ -53,8 +52,10 @@ ${HIGHLIGHTS:-_No commits found._}
 
 EOF
 
-if [[ -n "$NOTES" ]]; then
-  for f in $NOTES; do
+if [[ -n "$NOTE_FILES" ]]; then
+  for f in $NOTE_FILES; do
+    # Only include files that exist in the current checkout
+    [[ -f "$f" ]] || continue
     d="$(basename "$f" .md)"
     echo "### ${d}" >> "$OUT"
     echo "" >> "$OUT"
