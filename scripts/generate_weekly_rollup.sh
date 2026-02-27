@@ -5,7 +5,14 @@ cd "$(dirname "$0")/.."
 mkdir -p docs journal/daily
 
 END="$(date -u +%Y-%m-%d)"
-START="$(date -u -d "$END -6 days" +%Y-%m-%d)"
+
+# START = END minus 6 days (portable: macOS uses -v, Linux uses -d)
+if date -u -v-6d +%Y-%m-%d >/dev/null 2>&1; then
+  START="$(date -u -v-6d +%Y-%m-%d)"
+else
+  START="$(date -u -d "$END -6 days" +%Y-%m-%d)"
+fi
+
 STAMP="$(date -u +%G-W%V)"
 OUT="docs/${START}_${STAMP}_weekly-log.md"
 
@@ -19,8 +26,12 @@ fi
 COMMITS="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --oneline | wc -l | tr -d ' ')"
 FILES_CHANGED="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --name-only --pretty="" | sed '/^$/d' | sort -u | wc -l | tr -d ' ')"
 HIGHLIGHTS="$(git log --since="$START 00:00:00" --until="$END 23:59:59" --pretty=format:'- %s' | head -n 20 || true)"
-
-NOTES="$(ls journal/daily/*.md 2>/dev/null | awk -v s="$START" -v e="$END" '
+# Find daily notes via git history (robust: works even if files moved/changed this week)
+NOTE_FILES="$(git log --since="$START 00:00:00" --until="$END 23:59:59" \
+  --name-only --pretty="" \
+  | sed '/^$/d' \
+  | grep '^journal/daily/.*\.md$' \
+  | sort -u || true)"
   match($0, /([0-9]{4}-[0-9]{2}-[0-9]{2})\.md$/, a);
   if (a[1] >= s && a[1] <= e) print $0
 ' || true)"
