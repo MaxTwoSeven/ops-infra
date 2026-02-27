@@ -9,3 +9,4 @@ ops-dashboard/**/node_modules/
 ops-dashboard/web/dist/
 .DS_Store
 .weekly_log_path
+.weekly_log_path
