@@ -1,7 +1,49 @@
+import path from "path";
+import fs from "fs/promises";
 import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+
+// --- Docs API (System documentation) ---
+const DOCS_ROOT = path.resolve(process.cwd(), "..", "docs", "system");
+
+function safeJoin(base, target) {
+  const targetPath = path.resolve(base, target);
+  if (!targetPath.startsWith(base)) {
+    throw new Error("Refusing path traversal");
+  }
+  return targetPath;
+}
+
+app.get("/api/docs/list", async (req, res) => {
+  try {
+    const files = await fs.readdir(DOCS_ROOT);
+    // only expose known-good types
+    const allowed = files.filter(f => f.endsWith(".md") || f.endsWith(".mmd"));
+    res.json({ root: "system", files: allowed.sort() });
+  } catch (err) {
+    res.status(500).json({ error: String(err) });
+  }
+});
+
+app.get("/api/docs/:name", async (req, res) => {
+  try {
+    const name = req.params.name;
+    if (!(name.endsWith(".md") || name.endsWith(".mmd"))) {
+      return res.status(400).send("Unsupported file type");
+    }
+    const filePath = safeJoin(DOCS_ROOT, name);
+    const content = await fs.readFile(filePath, "utf-8");
+    res.type("text/plain").send(content);
+  } catch (err) {
+    res.status(404).json({ error: String(err) });
+  }
+});
+
+
+
+
 
 const app = express();
 const PORT = process.env.PORT || 4310;
