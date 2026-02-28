@@ -1,9 +1,32 @@
 flowchart TD
-  A[You: Daily note] --> B[journal/daily/YYYY-MM-DD.md]
-  B --> C[git add/commit/push]
-  C --> D[GitHub main branch]
-  D --> E[GitHub Actions: Weekly Rollup]
+
+  A[You<br/>Daily Work] --> B[journal/daily/YYYY-MM-DD.md]
+
+  B --> C[git add / commit / push]
+
+  C --> D[GitHub<br/>main branch]
+
+  D --> E[GitHub Actions<br/>weekly-rollup.yml]
+
   E --> F[generate_weekly_rollup.sh]
+
   F --> G[docs/YYYY-W##_weekly-log.md]
-  G --> H[Dashboard: Express API]
-  H --> I[Dashboard: React UI]
+
+  G --> H[Express API<br/>/api/logs]
+
+  H --> I[React Dashboard<br/>localhost:5174]
+
+  subgraph Local Machine
+    A
+    B
+    C
+    H
+    I
+  end
+
+  subgraph GitHub Cloud
+    D
+    E
+    F
+    G
+  end
