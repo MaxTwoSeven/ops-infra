@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import SystemDocs from "./SystemDocs";
+
+type Tab = "dashboard" | "system";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [tab, setTab] = useState<Tab>("dashboard");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div style={{ minHeight: "100vh", padding: 16 }}>
+      <header
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: 12,
+          padding: "12px 14px",
+          border: "1px solid #ddd",
+          borderRadius: 14,
+          marginBottom: 16,
+        }}
+      >
+        <div style={{ fontWeight: 800, fontSize: 18 }}>Ops Dashboard</div>
+
+        <nav style={{ display: "flex", gap: 8 }}>
+          <button
+            onClick={() => setTab("dashboard")}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 10,
+              border: "1px solid #ddd",
+              background: tab === "dashboard" ? "#eee" : "white",
+              cursor: "pointer",
+            }}
+          >
+            Dashboard
+          </button>
+          <button
+            onClick={() => setTab("system")}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 10,
+              border: "1px solid #ddd",
+              background: tab === "system" ? "#eee" : "white",
+              cursor: "pointer",
+            }}
+          >
+            System
+          </button>
+        </nav>
+      </header>
+
+      <main>
+        {tab === "dashboard" ? (
+          <div
+            style={{
+              border: "1px solid #ddd",
+              borderRadius: 14,
+              padding: 16,
+            }}
+          >
+            <h2 style={{ marginTop: 0 }}>Dashboard</h2>
+            <p style={{ marginBottom: 0, opacity: 0.8 }}>
+              Next: show weekly rollups, latest daily note, workflow status, and health checks.
+            </p>
+          </div>
+        ) : (
+          <SystemDocs />
+        )}
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
