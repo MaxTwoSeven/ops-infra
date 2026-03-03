@@ -78,7 +78,7 @@ export default function SystemDocs() {
                 padding: "8px 10px",
                 borderRadius: 10,
                 border: "1px solid #ddd",
-                background: f === selected ? "#eee" : "white",
+                background: f === selected ? "#333" : "#000",
                 cursor: "pointer",
               }}
             >

@@ -30,7 +30,7 @@ function App() {
               padding: "8px 12px",
               borderRadius: 10,
               border: "1px solid #ddd",
-              background: tab === "dashboard" ? "#eee" : "white",
+              background: tab === "dashboard" ? "#333" : "#000",
               cursor: "pointer",
             }}
           >
@@ -42,7 +42,7 @@ function App() {
               padding: "8px 12px",
               borderRadius: 10,
               border: "1px solid #ddd",
-              background: tab === "system" ? "#eee" : "white",
+              background: tab === "system" ? "#333" : "#000",
               cursor: "pointer",
             }}
           >

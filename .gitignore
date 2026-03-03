@@ -1,12 +1,11 @@
 
-# Ops dashboard
-ops-dashboard/**/node_modules/
-ops-dashboard/web/dist/
-.DS_Store
+# Node
+node_modules/
 
 # Ops dashboard
 ops-dashboard/**/node_modules/
 ops-dashboard/web/dist/
+
+# System
 .DS_Store
-.weekly_log_path
 .weekly_log_path

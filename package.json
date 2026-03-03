@@ -1,0 +1,13 @@
+{
+  "name": "ops-infra",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --names \"server,web\" --prefix-colors \"cyan,magenta\" \"npm run server\" \"npm run web\"",
+    "server": "node ops-dashboard/server/server.js",
+    "web": "npm --prefix ops-dashboard/web run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
