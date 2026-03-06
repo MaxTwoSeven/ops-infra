@@ -93,10 +93,11 @@ git push
 
 ## Repo Locations
 
-| Repo | Path |
-|------|------|
-| ops-infra | `/Users/maxguarin/Developer/ops-infra` |
-| mx-controller | `/Users/maxguarin/Developer/mx-controller` |
+| Repo | Path | GitHub |
+|------|------|--------|
+| ops-infra | `/Users/maxguarin/Developer/ops-infra` | [MaxTwoSeven/ops-infra](https://github.com/MaxTwoSeven/ops-infra) |
+| mx-controller | `/Users/maxguarin/Developer/mx-controller` | — |
+| VL53L5CX-V2 | `/Users/maxguarin/Developer/VL53L5CX-V2` | [MaxTwoSeven/VL53L5CX-V2](https://github.com/MaxTwoSeven/VL53L5CX-V2) |
 
 ---
 
