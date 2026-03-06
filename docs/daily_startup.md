@@ -97,3 +97,42 @@ git push
 |------|------|
 | ops-infra | `/Users/maxguarin/Developer/ops-infra` |
 | mx-controller | `/Users/maxguarin/Developer/mx-controller` |
+
+---
+
+## How the Reporting Pipeline Works
+
+```
+YOU
+ ↓
+Daily Note  (journal/daily/YYYY-MM-DD.md)
+ ↓
+Git Commit  (versioned event stream)
+ ↓
+GitHub main branch
+ ↓
+GitHub Action  (weekly-rollup — runs every Monday 9am ET)
+ ↓
+generate_weekly_rollup.sh
+ ↓
+docs/YYYY-W##_weekly-log.md
+ ↓
+Local Dashboard  (localhost:4310)
+```
+
+**Mental model:** `Raw → Versioned → Automated → Compressed → Visualized`
+
+This is your operational feedback loop.
+
+---
+
+## When to Check GitHub Web
+
+**Do check GitHub when:**
+- You pushed and want confirmation it landed
+- A weekly-rollup Action should have run
+- You want to inspect generated rollup files
+
+**Don't check GitHub for:**
+- Local debugging
+- Staging / working tree status

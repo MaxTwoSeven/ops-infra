@@ -13,6 +13,7 @@ See **[docs/daily_startup.md](docs/daily_startup.md)** for daily startup procedu
 - Weekly Rollup → GitHub Actions (Mondays 9am ET) or `./scripts/generate_weekly_rollup.sh`
 - Mission Control → `cd ~/Developer/mx-controller && npm run electron:dev`
 - ZSH History Backup → `docs/zsh_history_backup.md`
+- Reporting Pipeline → `docs/daily_startup.md` (see bottom of file)
 
 ## Repo Locations
 
